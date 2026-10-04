@@ -4,6 +4,9 @@ import { useState } from "react";
 
 type Props = {
   type: "contact" | "franchise";
+  /** Where the visitor's mail app sends the message. */
+  email?: string;
+  phone: string;
   messageLabel?: string;
   withLocation?: boolean;
 };
@@ -11,32 +14,36 @@ type Props = {
 const field =
   "mt-1.5 w-full rounded-xl border border-yokii/30 bg-white px-4 py-3 text-ink outline-none focus:border-yokii focus:ring-2 focus:ring-yokii/30";
 
-export function InquiryForm({ type, messageLabel = "Message", withLocation }: Props) {
-  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+export function InquiryForm({ type, email, phone, messageLabel = "Message", withLocation }: Props) {
+  const [sent, setSent] = useState(false);
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setState("sending");
-    const body = Object.fromEntries(new FormData(e.currentTarget));
-    try {
-      const res = await fetch("/api/inquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...body, type }),
-      });
-      setState(res.ok ? "done" : "error");
-    } catch {
-      setState("error");
-    }
-  }
-
-  if (state === "done") {
+  if (!email) {
     return (
-      <div role="status" className="rounded-[2rem] bg-sky p-8 text-navy">
-        <p className="text-xl font-bold">Thank you! 💙</p>
-        <p className="mt-2">We&apos;ve received your message and will get back to you soon.</p>
+      <div className="rounded-[2rem] bg-sky p-8 text-navy">
+        <p className="text-xl font-bold">Get in touch by phone</p>
+        <p className="mt-2">
+          Please call us on <span className="font-bold">{phone}</span>.
+        </p>
       </div>
     );
+  }
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    const subject = type === "franchise" ? `Franchise inquiry from ${d.name}` : `Website message from ${d.name}`;
+    const body = [
+      `Name: ${d.name}`,
+      `Phone: ${d.phone}`,
+      `Email: ${d.email}`,
+      d.location ? `Location: ${d.location}` : "",
+      "",
+      d.message,
+    ]
+      .filter((l, i) => l !== "" || i > 3)
+      .join("\n");
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
   }
 
   return (
@@ -52,7 +59,7 @@ export function InquiryForm({ type, messageLabel = "Message", withLocation }: Pr
         </label>
       </div>
       <label className="block font-bold text-navy">
-        Email
+        Your email
         <input name="email" type="email" required maxLength={150} autoComplete="email" className={field} />
       </label>
       {withLocation && (
@@ -65,16 +72,22 @@ export function InquiryForm({ type, messageLabel = "Message", withLocation }: Pr
         {messageLabel}
         <textarea name="message" required rows={5} maxLength={2000} className={field} />
       </label>
-      {/* honeypot — hidden from people, bots fill it */}
-      <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
-      {state === "error" && (
-        <p role="alert" className="font-bold text-red-700">
-          Something went wrong. Please try again or call us.
-        </p>
-      )}
-      <button type="submit" disabled={state === "sending"} className="btn btn-primary disabled:opacity-60">
-        {state === "sending" ? "Sending…" : "Send message"} <span aria-hidden>→</span>
+      <button type="submit" className="btn btn-primary">
+        Send by email <span aria-hidden>→</span>
       </button>
+      <p role="status" className="text-sm text-muted">
+        {sent ? (
+          <>
+            Your email app should now be open with your message ready — press send there. No luck? Write to{" "}
+            <a href={`mailto:${email}`} className="font-bold text-yokii-deep underline">
+              {email}
+            </a>{" "}
+            or call {phone}.
+          </>
+        ) : (
+          "This opens your email app with the message filled in."
+        )}
+      </p>
     </form>
   );
 }

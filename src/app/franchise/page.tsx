@@ -3,13 +3,15 @@ import Image from "next/image";
 import { PageHero } from "@/components/PageHero";
 import { InquiryForm } from "@/components/InquiryForm";
 import { franchisePackage } from "@/lib/data";
+import { getSettings } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Franchise",
   description: "Bring good mood in every cup to your community — YOKII franchise and kiosk opportunities.",
 };
 
-export default function FranchisePage() {
+export default async function FranchisePage() {
+  const s = await getSettings();
   return (
     <>
       <PageHero eyebrow="Franchise opportunities" title="Bring good mood in every cup to your community." />
@@ -41,7 +43,7 @@ export default function FranchisePage() {
               steps.
             </p>
           </div>
-          <InquiryForm type="franchise" withLocation messageLabel="Tell us about your plans" />
+          <InquiryForm type="franchise" email={s.email} phone={s.phone} withLocation messageLabel="Tell us about your plans" />
         </div>
       </section>
     </>

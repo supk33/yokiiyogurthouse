@@ -56,7 +56,7 @@ export default async function ContactPage() {
             </ul>
           </div>
         </div>
-        <InquiryForm type="contact" />
+        <InquiryForm type="contact" email={s.email} phone={s.phone} />
       </section>
     </>
   );

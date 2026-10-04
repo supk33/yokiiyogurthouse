@@ -39,7 +39,8 @@ type CmsSettings = {
 
 export async function getSettings(): Promise<SiteSettings> {
   const s = await cms<CmsSettings>("settings");
-  if (!s) return siteSettings;
+  const email = s?.email || process.env.CONTACT_EMAIL || siteSettings.email;
+  if (!s) return { ...siteSettings, email };
   const phone = s.phone || siteSettings.phone;
   return {
     ...siteSettings,
@@ -47,7 +48,7 @@ export async function getSettings(): Promise<SiteSettings> {
     tagline: s.tagline || siteSettings.tagline,
     phone,
     phoneHref: s.phone ? `tel:${s.phone.replace(/[^\d+]/g, "")}` : siteSettings.phoneHref,
-    email: s.email || siteSettings.email,
+    email,
     line: s.line || siteSettings.line,
   };
 }
@@ -56,35 +57,4 @@ export async function getSettings(): Promise<SiteSettings> {
 // step/package/module/monthly). Add one in the admin, then map it here.
 export async function getMenu(): Promise<MenuCategory[]> {
   return menu;
-}
-
-export type Inquiry = {
-  type: "contact" | "franchise";
-  name: string;
-  phone: string;
-  email: string;
-  message: string;
-  location?: string;
-};
-
-// The CMS API is read-only, so inquiries go to INQUIRY_WEBHOOK_URL (any endpoint that
-// accepts a JSON POST: Zapier/Make, Slack, Google Apps Script, a mail relay...).
-// Returns false when no destination is configured so the form never reports a lead
-// as sent when it was not.
-export async function submitInquiry(data: Inquiry): Promise<boolean> {
-  const url = process.env.INQUIRY_WEBHOOK_URL;
-  if (!url) {
-    console.warn("[inquiry] INQUIRY_WEBHOOK_URL not set — inquiry NOT delivered");
-    return false;
-  }
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, receivedAt: new Date().toISOString() }),
-    });
-    return res.ok;
-  } catch {
-    return false;
-  }
 }
