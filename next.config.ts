@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "sk109.com" },
       { protocol: "https", hostname: "**.sk109.com" },
+      // CMS image uploads are stored on Vercel Blob.
+      { protocol: "https", hostname: "**.public.blob.vercel-storage.com" },
     ],
   },
 };
