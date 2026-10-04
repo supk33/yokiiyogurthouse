@@ -53,8 +53,50 @@ export async function getSettings(): Promise<SiteSettings> {
   };
 }
 
-// The CMS has no menu content type yet (the spec only has sk109's stat/service/strength/
-// step/package/module/monthly). Add one in the admin, then map it here.
+// CMS types: menu_category {slug,title,tagline,order} and menu_item
+// {slug,name,price,image,category,order}. `category` is the category slug (a category title also works).
+// Falls back to the static menu while the CMS has no published entries.
+type CmsCategory = { slug: string; title?: string; tagline?: string; order?: string | number };
+type CmsItem = {
+  slug: string;
+  name?: string;
+  price?: string | number;
+  image?: string;
+  category?: string;
+  order?: string | number;
+};
+
+const num = (v: unknown, fallback = 0) => {
+  const n = typeof v === "number" ? v : parseFloat(String(v ?? "").replace(/[^\d.]/g, ""));
+  return Number.isFinite(n) ? n : fallback;
+};
+const key = (s: string) => s.trim().toLowerCase();
+
+export function buildMenu(cats: CmsCategory[], items: CmsItem[]): MenuCategory[] {
+  const localImage = new Map(
+    menu.flatMap((c) => c.items.filter((i) => i.image).map((i) => [key(i.name), i.image!] as const)),
+  );
+  return [...cats]
+    .sort((a, b) => num(a.order, 999) - num(b.order, 999))
+    .map((c) => {
+      const title = c.title || c.slug;
+      const mine = items
+        .filter((i) => i.category && [key(c.slug), key(title)].includes(key(i.category)))
+        .sort((a, b) => num(a.order, 999) - num(b.order, 999))
+        .filter((i) => i.name)
+        .map((i) => ({
+          name: i.name!,
+          price: num(i.price),
+          image: i.image || localImage.get(key(i.name!)),
+        }));
+      return { slug: c.slug, title, tagline: c.tagline || undefined, items: mine };
+    })
+    .filter((c) => c.items.length > 0);
+}
+
 export async function getMenu(): Promise<MenuCategory[]> {
-  return menu;
+  const [cats, items] = await Promise.all([cms<CmsCategory[]>("menu_category"), cms<CmsItem[]>("menu_item")]);
+  if (!cats?.length || !items?.length) return menu;
+  const built = buildMenu(cats, items);
+  return built.length ? built : menu;
 }
