@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* YOKII brand tokens — source/COLOR/YOKII_COLOR.jpg (#00AFF4) + website blueprint */
+@theme inline {
+  --color-yokii: #00aff4;
+  --color-yokii-deep: #0a8cc4;
+  --color-yokii-soft: #4dbdf7;
+  --color-sky: #e8f5ff;
+  --color-navy: #17304d;
+  --color-ink: #1b2a3b;
+  --color-muted: #55657a;
+  --color-sun: #ffd25f;
+  --color-berry: #f28ca8;
+  --color-cream: #fff9ee;
+  --font-sans: var(--font-maven), var(--font-opun), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-maven), var(--font-opun), ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: 0 24px 60px -24px rgb(0 100 160 / 0.35);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1b2a3b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-sm font-bold uppercase tracking-[0.18em] text-yokii-deep;
+  }
+  .h-display {
+    @apply font-display font-extrabold uppercase leading-[1.08] tracking-tight text-navy;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-[0.1em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yokii;
+  }
+  .btn-primary {
+    @apply bg-yokii text-white hover:bg-yokii-deep;
+  }
+  .btn-outline {
+    @apply border border-yokii/40 bg-white text-yokii-deep hover:border-yokii hover:bg-sky;
+  }
+  .container-x {
+    @apply mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-10;
+  }
+}
