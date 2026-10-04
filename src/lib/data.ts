@@ -38,6 +38,7 @@ export const siteSettings: SiteSettings = {
   ],
   phone: "080-274-4440",
   phoneHref: "tel:+66802744440",
+  email: "info@yokiiyogurthouse.com",
   mapUrl:
     "https://www.google.com/maps/search/?api=1&query=Serm-Mit+Tower+159+Sukhumvit+21+Road+Bangkok",
   social: [
