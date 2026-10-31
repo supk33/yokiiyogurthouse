@@ -55,6 +55,14 @@ export function Footer({ settings }: { settings: SiteSettings }) {
       </div>
       <div className="border-t border-white/25 py-5 text-center text-sm font-medium text-white/90">
         © {new Date().getFullYear()} YOKII Yogurt House. All rights reserved.
+        <span className="mx-2">·</span>
+        <Link href="/privacy-policy" className="hover:underline">
+          Privacy Policy
+        </Link>
+        <span className="mx-2">·</span>
+        <Link href="/terms-of-use" className="hover:underline">
+          Terms of Use
+        </Link>
       </div>
     </footer>
   );

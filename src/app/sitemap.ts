@@ -10,5 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/visit-us", priority: 0.7 },
     { path: "/franchise", priority: 0.6 },
     { path: "/contact", priority: 0.6 },
+    { path: "/privacy-policy", priority: 0.3 },
+    { path: "/terms-of-use", priority: 0.3 },
   ].map(({ path, priority }) => ({ url: `${base}${path}`, changeFrequency: "weekly", priority }));
 }
