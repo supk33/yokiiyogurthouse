@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Image from "next/image";
 import { PageHero } from "@/components/PageHero";
 import { getMenu } from "@/lib/api";
@@ -7,6 +8,22 @@ export const metadata: Metadata = {
   title: "Menu",
   description: "Yogurt smoothies from 59.- — Signature cups, toppings and Greek yogurt bowls.",
 };
+
+// Thai has no spaces, so browsers guess where to wrap and often split mid-word. Names in data.ts
+// carry a zero-width space (U+200B) at the word boundaries we want; each segment never breaks inside.
+function ThaiName({ text }: { text: string }) {
+  const parts = text.split("​");
+  return (
+    <>
+      {parts.map((p, i) => (
+        <Fragment key={i}>
+          <span className="whitespace-nowrap">{p}</span>
+          {i < parts.length - 1 && <wbr />}
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 export default async function MenuPage() {
   const categories = await getMenu();
@@ -32,10 +49,12 @@ export default async function MenuPage() {
                   {withImages.map((item) => (
                     <li key={item.name} className="flex items-center gap-6 rounded-[2rem] bg-sky p-5">
                       <div className="relative h-52 w-32 shrink-0">
-                        <Image src={item.image!} alt={item.name} fill sizes="128px" className="object-contain mix-blend-multiply" />
+                        <Image src={item.image!} alt={item.name.replace(/​/g, "")} fill sizes="128px" className="object-contain mix-blend-multiply" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold leading-snug text-navy">{item.name}</h3>
+                        <h3 className="text-lg font-bold leading-snug text-navy [text-wrap:balance]">
+                          <ThaiName text={item.name} />
+                        </h3>
                         {item.nameEn && <p className="text-sm text-muted">{item.nameEn}</p>}
                         {item.note && <p className="mt-1 text-sm text-muted">{item.note}</p>}
                         <p className="mt-2 inline-block rounded-full bg-yokii px-4 py-1 font-bold text-white">{item.price}.-</p>
@@ -52,7 +71,7 @@ export default async function MenuPage() {
                     .map((item) => (
                       <li key={item.name} className="flex items-baseline gap-3 border-b border-sky py-3">
                         <span className="font-medium text-ink">
-                          {item.name}
+                          <ThaiName text={item.name} />
                           {item.nameEn && <span className="ml-2 text-sm font-normal text-muted">{item.nameEn}</span>}
                         </span>
                         <span aria-hidden className="mb-1 flex-1 border-b border-dotted border-yokii/40" />
