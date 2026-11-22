@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const pillars = [
-  { n: "01", title: "Pure Yogurt", body: "100% Pure Yogurt", img: "/images/black-sesame.webp", color: "text-yokii-deep" },
-  { n: "02", title: "Real Fruit", body: "Made with Real Fruits", img: "/images/strawberry-smoothie.webp", color: "text-berry" },
-  { n: "03", title: "No Yogurt Powder", body: "Just the good stuff.", img: "/images/berry-bliss.webp", color: "text-[#d98a1c]" },
+  { n: "01", title: "Pure Yogurt", body: "100% Pure Yogurt", img: "/images/menu/original.webp", color: "text-yokii-deep" },
+  { n: "02", title: "Real Fruit", body: "Made with Real Fruits", img: "/images/menu/mixed-berry.webp", color: "text-berry" },
+  { n: "03", title: "No Yogurt Powder", body: "Just the good stuff.", img: "/images/menu/mango.webp", color: "text-[#d98a1c]" },
 ];
 
 export default function Home() {
@@ -33,15 +33,19 @@ export default function Home() {
             <span aria-hidden className="absolute -right-4 -top-6 h-28 w-28 rounded-full bg-sun" />
             <span aria-hidden className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-berry/80" />
             <div className="relative aspect-[5/4] overflow-hidden rounded-[2.5rem] shadow-card">
-              <Image
-                src="/images/hero.webp"
-                alt="A YOKII mixed berry yogurt smoothie topped with berries and granola"
-                fill
-                priority
-                sizes="(min-width:1024px) 600px, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute bottom-6 left-6 rounded-2xl bg-white px-5 py-3.5 shadow-lg">
+              <div className="absolute inset-0 bg-white" />
+              <div className="absolute inset-0 flex items-end justify-center px-2 pt-4">
+                {[
+                  { src: "/images/menu/strawberry.webp", alt: "YOKII strawberry yogurt smoothie", w: "w-[40%]", z: "z-0" },
+                  { src: "/images/menu/mixed-berry.webp", alt: "YOKII mixed berry yogurt smoothie", w: "w-[52%] -mx-[6%]", z: "z-10", priority: true },
+                  { src: "/images/menu/mango.webp", alt: "YOKII mango yogurt smoothie", w: "w-[40%]", z: "z-0" },
+                ].map((c) => (
+                  <div key={c.src} className={`relative aspect-[4/5] ${c.w} ${c.z}`}>
+                    <Image src={c.src} alt={c.alt} fill priority={c.priority} sizes="(min-width:1024px) 200px, 33vw" className="object-contain object-bottom" />
+                  </div>
+                ))}
+              </div>
+              <div className="absolute left-5 top-5 rounded-2xl bg-white px-5 py-3.5 shadow-lg">
                 <p className="text-[0.7rem] font-bold uppercase tracking-[0.18em] text-yokii-deep">YOKII Favorite</p>
                 <p className="mt-0.5 font-bold text-navy">Fresh fruit. Thick yogurt. Big mood.</p>
               </div>
@@ -65,7 +69,7 @@ export default function Home() {
           {pillars.map((p) => (
             <li key={p.n} className="overflow-hidden rounded-[2rem] bg-cream">
               <div className="relative aspect-[7/5] bg-sky">
-                <Image src={p.img} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover object-top" />
+                <Image src={p.img} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-contain object-bottom p-3 mix-blend-multiply" />
               </div>
               <div className="px-6 pb-7 pt-5">
                 <p className={`text-xs font-bold tracking-widest ${p.color}`}>{p.n}</p>
