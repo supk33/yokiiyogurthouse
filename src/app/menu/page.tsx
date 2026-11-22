@@ -48,8 +48,8 @@ export default async function MenuPage() {
                 <ul className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                   {withImages.map((item) => (
                     <li key={item.name} className="flex items-center gap-6 rounded-[2rem] bg-gradient-to-b from-[#acdefc] to-[#d9eefd] p-5">
-                      <div className="relative h-52 w-32 shrink-0">
-                        <Image src={item.image!} alt={item.name.replace(/​/g, "")} fill sizes="256px" quality={85} className="object-contain mix-blend-multiply" />
+                      <div className="relative h-56 w-40 shrink-0 overflow-hidden rounded-2xl bg-white shadow-sm">
+                        <Image src={item.image!} alt={item.name.replace(/​/g, "")} fill sizes="320px" quality={90} className="object-contain p-1" />
                       </div>
                       <div>
                         <h3 className="text-lg font-bold leading-snug text-navy [text-wrap:balance]">

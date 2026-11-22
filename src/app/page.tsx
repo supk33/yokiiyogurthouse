@@ -33,7 +33,7 @@ export default function Home() {
             <span aria-hidden className="absolute -right-4 -top-6 h-28 w-28 rounded-full bg-sun" />
             <span aria-hidden className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-berry/80" />
             <div className="relative aspect-[5/4] overflow-hidden rounded-[2.5rem] shadow-card">
-              <div className="absolute inset-0 bg-gradient-to-b from-[#acdefc] to-[#d9eefd]" />
+              <div className="absolute inset-0 bg-white" />
               <div className="absolute inset-0 flex items-end justify-center px-2 pt-4">
                 {[
                   { src: "/images/menu/strawberry.webp", alt: "YOKII strawberry yogurt smoothie", w: "w-[40%]", z: "z-0" },
@@ -41,7 +41,7 @@ export default function Home() {
                   { src: "/images/menu/mango.webp", alt: "YOKII mango yogurt smoothie", w: "w-[40%]", z: "z-0" },
                 ].map((c) => (
                   <div key={c.src} className={`relative aspect-[4/5] ${c.w} ${c.z}`}>
-                    <Image src={c.src} alt={c.alt} fill priority={c.priority} sizes="(min-width:1024px) 200px, 33vw" className="object-contain object-bottom mix-blend-multiply" />
+                    <Image src={c.src} alt={c.alt} fill priority={c.priority} sizes="(min-width:1024px) 200px, 33vw" className="object-contain object-bottom" />
                   </div>
                 ))}
               </div>
@@ -68,8 +68,8 @@ export default function Home() {
         <ul className="mt-10 grid gap-6 md:grid-cols-3">
           {pillars.map((p) => (
             <li key={p.n} className="overflow-hidden rounded-[2rem] bg-cream">
-              <div className="relative aspect-[7/5] bg-gradient-to-b from-[#acdefc] to-[#d9eefd]">
-                <Image src={p.img} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-contain object-bottom p-3 mix-blend-multiply" />
+              <div className="relative aspect-[7/5] bg-white">
+                <Image src={p.img} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-contain object-bottom p-2" />
               </div>
               <div className="px-6 pb-7 pt-5">
                 <p className={`text-xs font-bold tracking-widest ${p.color}`}>{p.n}</p>
