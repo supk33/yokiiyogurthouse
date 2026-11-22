@@ -94,16 +94,9 @@ export function buildMenu(cats: CmsCategory[], items: CmsItem[]): MenuCategory[]
     .filter((c) => c.items.length > 0);
 }
 
+// The menu in ./data.ts is the source of truth (the CMS only holds the two old Signature items,
+// which would otherwise be merged over the new menu). To go back to CMS-driven menus, restore
+// the buildMenu merge here once the CMS is filled in with the new items.
 export async function getMenu(): Promise<MenuCategory[]> {
-  const [cats, items] = await Promise.all([cms<CmsCategory[]>("menu_category"), cms<CmsItem[]>("menu_item")]);
-  if (!cats?.length || !items?.length) return menu;
-  const built = buildMenu(cats, items);
-  if (!built.length) return menu;
-  // While the CMS menu is being filled in, a CMS category replaces the static one with the
-  // same slug and the remaining static categories stay, so a partly filled CMS never shrinks
-  // the live menu. Once every category is in the CMS, delete the static `menu` in ./data.ts.
-  const bySlug = new Map(built.map((c) => [c.slug, c]));
-  const merged = menu.map((c) => bySlug.get(c.slug) ?? c);
-  const known = new Set(menu.map((c) => c.slug));
-  return [...merged, ...built.filter((c) => !known.has(c.slug))];
+  return menu;
 }

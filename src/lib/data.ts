@@ -3,6 +3,7 @@
 
 export type MenuItem = {
   name: string;
+  nameEn?: string;
   price: number;
   note?: string;
   image?: string;
@@ -62,69 +63,76 @@ export const siteSettings: SiteSettings = {
 
 export const menu: MenuCategory[] = [
   {
+    slug: "yogurt-smoothie",
+    title: "Yogurt Smoothie",
+    tagline: "โยเกิร์ตปั่นสดทุกแก้ว — 100% real yogurt & real fruit",
+    items: [
+      { name: "โยเกิร์ตปั่น Original", nameEn: "Original Yogurt Smoothie", price: 59, image: "/images/menu/original.webp" },
+      { name: "โยเกิร์ตสตรอเบอรี่", nameEn: "Strawberry", price: 79, image: "/images/menu/strawberry.webp" },
+      { name: "โยเกิร์ตมิกซ์เบอร์รี่", nameEn: "Mixed Berry", price: 89, image: "/images/menu/mixed-berry.webp" },
+      { name: "โยเกิร์ตอะโวคาโด", nameEn: "Avocado", price: 99, image: "/images/menu/avocado.webp" },
+      { name: "โยเกิร์ตปั่นเสาวรส", nameEn: "Passion Fruit", price: 89, image: "/images/menu/passion-fruit.webp" },
+      { name: "โยเกิร์ตปั่นบัวลอย", nameEn: "Bua Loy", price: 79, image: "/images/menu/bua-loy.webp" },
+      { name: "โยเกิร์ตปั่นข้าวเหนียวดำ", nameEn: "Black Sticky Rice", price: 69, image: "/images/menu/black-sticky-rice.webp" },
+      { name: "โยเกิร์ตปั่นวุ้นน้ำผึ้ง", nameEn: "Honey Jelly", price: 79, image: "/images/menu/honey-jelly.webp" },
+      { name: "โยเกิร์ตปั่นมะม่วง", nameEn: "Mango", price: 89, image: "/images/menu/mango.webp" },
+      { name: "โยเกิร์ตปั่นปีโป้", nameEn: "Pipo", price: 69, image: "/images/menu/pipo.webp" },
+      { name: "โยเกิร์ตปั่นโอริโอ้", nameEn: "Oreo", price: 79, image: "/images/menu/oreo.webp" },
+      { name: "โยเกิร์ตปั่นช็อกโกแลตสตรอว์เบอร์รี่", nameEn: "Chocolate Strawberry", price: 89, image: "/images/menu/chocolate-strawberry.webp" },
+      { name: "โยเกิร์ตผักเคลสับปะรด", nameEn: "Kale Pineapple", price: 109, image: "/images/menu/kale-pineapple.webp" },
+      { name: "โยเกิร์ตดาร์คโกโก้กล้วยหอม", nameEn: "Dark Cocoa Banana", price: 99, image: "/images/menu/dark-cocoa-banana.webp" },
+      { name: "โยเกิร์ตปั่นงาดำ", nameEn: "Black Sesame", price: 69, image: "/images/menu/black-sesame.webp" },
+      { name: "โยเกิร์ตอัลมอนด์น้ำผึ้ง", nameEn: "Honey Almond", price: 99, image: "/images/menu/honey-almond.webp" },
+      { name: "บิสคอฟน้ำผึ้ง", nameEn: "Biscoff Honey", price: 99, image: "/images/menu/biscoff-honey.webp" },
+    ],
+  },
+  {
     slug: "signature",
     title: "Signature",
     tagline: "Our most-loved cups",
     items: [
-      { name: "Thai Tea Cream Cheese", price: 89, image: "/images/thai-tea.webp" },
-      {
-        name: "Black Sesame Cream Cheese",
-        price: 89,
-        image: "/images/black-sesame-cc.webp",
-      },
+      { name: "โยเกิร์ตปั่นชาไทยครีมชีสบุกบราวชูก้า", nameEn: "Thai Tea Cream Cheese Brown Sugar Konjac", price: 89, image: "/images/menu/thai-tea-konjac.webp" },
+      { name: "โยเกิร์ตสตรอเบอร์รี่อัลมอนด์วิป", nameEn: "Strawberry Almond Whip", price: 119, note: "Strawberry · Whipped cream · Coarse-ground almonds", image: "/images/menu/strawberry-almond-whip.webp" },
     ],
   },
   {
-    slug: "berry-bliss",
-    title: "Berry Bliss",
-    tagline: "Fruity, fluffy, a little bit dreamy",
+    slug: "toppings",
+    title: "Toppings",
+    tagline: "Add your boost — ฿15 · ฿20 · ฿25",
     items: [
-      { name: "Strawberry", price: 79, image: "/images/strawberry.webp" },
-      { name: "Mixed Berry", price: 89, image: "/images/mixed-berry.webp" },
+      { name: "ข้าวเหนียวดำ", nameEn: "Black Sticky Rice", price: 15 },
+      { name: "งาดำ", nameEn: "Black Sesame", price: 15 },
+      { name: "เมล็ดเจีย", nameEn: "Chia Seeds", price: 15 },
+      { name: "ปีโป้", nameEn: "Pipo", price: 15 },
+      { name: "ว่านหางจระเข้", nameEn: "Aloe Vera", price: 15 },
+      { name: "วุ้นน้ำผึ้ง", nameEn: "Honey Jelly", price: 15 },
+      { name: "บุกบราว", nameEn: "Brown Sugar Konjac", price: 15 },
+      { name: "น้ำผึ้ง", nameEn: "Honey", price: 15 },
+      { name: "บัวลอย", nameEn: "Bua Loy", price: 15 },
+      { name: "โอริโอ้", nameEn: "Oreo", price: 15 },
+      { name: "กล้วย", nameEn: "Banana", price: 15 },
+      { name: "บิสคอฟ", nameEn: "Biscoff", price: 15 },
+      { name: "สตรอเบอรี่", nameEn: "Strawberry", price: 20 },
+      { name: "อัลมอนด์", nameEn: "Almond", price: 20 },
+      { name: "เสาวรส", nameEn: "Passion Fruit", price: 20 },
+      { name: "มะม่วง", nameEn: "Mango", price: 20 },
+      { name: "สับปะรด", nameEn: "Pineapple", price: 20 },
+      { name: "มิ๊กซ์เบอรี่", nameEn: "Mixed Berry", price: 20 },
+      { name: "ผักเคล", nameEn: "Kale", price: 20 },
+      { name: "วิปครีม", nameEn: "Whipped Cream", price: 20 },
+      { name: "ครีมชีส", nameEn: "Cream Cheese", price: 20 },
+      { name: "อะโวคาโด", nameEn: "Avocado", price: 25 },
     ],
   },
   {
-    slug: "tropical-fresh",
-    title: "Tropical Fresh",
+    slug: "greek-yogurt",
+    title: "Greek Yogurt",
+    tagline: "Probiotics · Real Fruit",
     items: [
-      { name: "Passion Fruit", price: 89 },
-      { name: "Mango", price: 89 },
-      { name: "Pineapple", price: 89 },
-      { name: "Banana", price: 79 },
-    ],
-  },
-  {
-    slug: "superfood",
-    title: "Superfood",
-    items: [
-      { name: "Avocado", price: 99 },
-      { name: "Acai Berry", price: 99 },
-      { name: "Vocado Honey", price: 119 },
-    ],
-  },
-  {
-    slug: "treat-yourself",
-    title: "Treat Yourself",
-    items: [
-      { name: "Original", price: 59 },
-      { name: "Black Sticky Rice", price: 69 },
-      { name: "Honey", price: 79 },
-      { name: "Oat", price: 79 },
-      { name: "Yogurt Pudding", price: 79 },
-    ],
-  },
-  {
-    slug: "add-your-boost",
-    title: "Add Your Boost",
-    items: [
-      { name: "Pipo", price: 69 },
-      { name: "Black Sesame", price: 69 },
-      { name: "Bua Loy", price: 79 },
-      { name: "Honey Jelly", price: 79 },
-      { name: "Oreo", price: 79 },
-      { name: "Honey Almond", price: 99 },
-      { name: "Chocolate Strawberry", price: 89 },
-      { name: "Dark Cocoa Banana", price: 99 },
+      { name: "Berry Granola Honey", price: 129, note: "Greek Yogurt · Strawberry · Blueberry · Banana · Granola · Honey", image: "/images/menu/greek-berry-granola.webp" },
+      { name: "Golden Mango Delight", price: 119, note: "Greek Yogurt · Mango · Kiwi · Granola · Chia Seeds · Honey", image: "/images/menu/greek-golden-mango.webp" },
+      { name: "Dark Chocolate Strawberry", price: 139, note: "Greek Yogurt · Strawberry · Banana · Dark Chocolate · Almond Slices · Chocolate Flakes", image: "/images/menu/greek-dark-choc-strawberry.webp" },
+      { name: "Biscoff Banana Crunch", price: 109, note: "Greek Yogurt · Banana · Biscoff Spread · Biscoff Crumble", image: "/images/menu/greek-biscoff-banana.webp" },
     ],
   },
 ];
