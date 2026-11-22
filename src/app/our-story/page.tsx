@@ -31,7 +31,18 @@ export default function OurStoryPage() {
           </p>
         </div>
         <div className="relative aspect-[7/5] overflow-hidden rounded-[2.5rem] shadow-card">
-          <Image src="/images/hero.webp" alt="YOKII mixed berry smoothie — Real Yogurt. Real Fruits. Real Happiness." fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-white" />
+          <div className="absolute inset-0 flex items-end justify-center px-2 pt-4">
+            {[
+              { src: "/images/menu/strawberry.webp", alt: "YOKII strawberry yogurt smoothie", w: "w-[40%]", z: "z-0" },
+              { src: "/images/menu/mixed-berry.webp", alt: "YOKII mixed berry yogurt smoothie", w: "w-[52%] -mx-[6%]", z: "z-10" },
+              { src: "/images/menu/mango.webp", alt: "YOKII mango yogurt smoothie", w: "w-[40%]", z: "z-0" },
+            ].map((c) => (
+              <div key={c.src} className={`relative aspect-[4/5] ${c.w} ${c.z}`}>
+                <Image src={c.src} alt={c.alt} fill sizes="(min-width:768px) 220px, 33vw" className="object-contain object-bottom" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
